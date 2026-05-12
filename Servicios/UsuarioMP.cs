@@ -1,9 +1,10 @@
-﻿using System;
+﻿using BE;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BE;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -115,7 +116,7 @@ namespace Servicios
             if (System.IO.File.Exists("c:/PanApp/PanApp_BD.xml") == false)
 
             { this.BD.Crear_nueva_BD("c:/PanApp/PanApp_BD.xml"); }
-            
+
             XDocument xmlBD = XDocument.Load("c:/PanApp/PanApp_BD.xml");
             if (admin == true)
             {
@@ -139,10 +140,32 @@ namespace Servicios
 
         public bool Checkear_bd()
         {
-            if (System.IO.File.Exists("c:/PanApp/PanApp_BD.xml") == false)
-            { return false; }   // no existe el archivo
-            else
-            { return true; }
+            string routefolder = @"C:\PanApp";
+                
+            if (Directory.Exists(routefolder))           //si existe la carpeta
+            {
+
+                if (System.IO.File.Exists("c:/PanApp/PanApp_BD.xml") == false)
+                {
+
+                    return false;                       // no existe el archivo
+
+
+                }
+                else
+                { return true; }
+
+            }
+            else                                     //se crea la carpeta sino existe
+
+            {
+                Directory.CreateDirectory(routefolder);   
+                return false;                       // se creo la carpeta para la BD
+
+            }
+
+
+
 
         }
 
